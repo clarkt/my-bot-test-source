@@ -4,6 +4,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const GitHubApi = require('github');
 
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
+const GITHUB_PASSWORD = process.env.GITHUB_PASSWORD;
+const REPOSITORY_OWNER = process.env.REPOSITORY_OWNER;
+const REPOSITORY_NAME = process.env.REPOSITORY_NAME;
 
 
 app.use(bodyParser.json());
@@ -17,6 +21,7 @@ app.get('/', (req, res) => {
 app.post('/altinn', ({body: payload}, response) => {
 
     console.log('payload: ', payload);
+    console.log('REPOSITORY_NAME: ', REPOSITORY_NAME);
     // if (payload && payload.commits) {
     //     treatPayload(payload);
     // }
