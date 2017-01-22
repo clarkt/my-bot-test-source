@@ -9,6 +9,21 @@ const GITHUB_PASSWORD = process.env.GITHUB_PASSWORD;
 const REPOSITORY_OWNER = process.env.REPOSITORY_OWNER;
 const REPOSITORY_NAME = process.env.REPOSITORY_NAME;
 
+const getCommitsFromPayload = payload => payload.commits;
+
+const getFilesFromCommit = (callback, {id: sha}) => {
+    github.repos.getCommit({
+        user: REPOSITORY_OWNER,
+        repo: REPOSITORY_NAME,
+        sha
+    }, (error, {files}) => {
+        if (error) {
+            console.log(error);
+        }
+        callback(files, sha);
+    });
+};
+
 const treatPayload = payload => {
     getCommitsFromPayload(payload).map(commit => {
         getFilesFromCommit((files, sha) => {
