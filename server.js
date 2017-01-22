@@ -9,6 +9,16 @@ const GITHUB_PASSWORD = process.env.GITHUB_PASSWORD;
 const REPOSITORY_OWNER = process.env.REPOSITORY_OWNER;
 const REPOSITORY_NAME = process.env.REPOSITORY_NAME;
 
+const treatPayload = payload => {
+    getCommitsFromPayload(payload).map(commit => {
+        getFilesFromCommit((files, sha) => {
+            console.log('files: ', files);
+            // filterJavascriptFiles(files).map(file => {
+            //     downloadFile(_.compose(sendComments, lintContent), file, sha);
+            // });
+        }, commit);
+    });
+};
 
 app.use(bodyParser.json());
 
@@ -22,9 +32,9 @@ app.post('/altinn', ({body: payload}, response) => {
 
     console.log('payload: ', payload);
     console.log('REPOSITORY_NAME: ', REPOSITORY_NAME);
-    // if (payload && payload.commits) {
-    //     treatPayload(payload);
-    // }
+    if (payload && payload.commits) {
+        treatPayload(payload);
+    }
     response.end();
 });
 
