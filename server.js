@@ -32,6 +32,7 @@ app.post('/altinn', ({body: payload}, response) => {
 
     console.log('payload: ', payload);
     console.log('REPOSITORY_NAME: ', REPOSITORY_NAME);
+    console.log('payload.commits: ', payload.commits);
     if (payload && payload.commits) {
         treatPayload(payload);
     }
