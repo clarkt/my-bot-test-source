@@ -9,6 +9,18 @@ const GITHUB_PASSWORD = process.env.GITHUB_PASSWORD;
 const REPOSITORY_OWNER = process.env.REPOSITORY_OWNER;
 const REPOSITORY_NAME = process.env.REPOSITORY_NAME;
 
+const github = new GitHubApi({
+    version: '3.0.0',
+    headers: {
+        'user-agent': 'my-ESLint-bot' // GitHub is happy with a unique user agent
+    }
+});
+github.authenticate({
+    type: 'basic',
+    username: GITHUB_USERNAME,
+    password: GITHUB_PASSWORD
+});
+
 const getCommitsFromPayload = payload => payload.commits;
 
 const getFilesFromCommit = (callback, {id: sha}) => {
